@@ -1,0 +1,4 @@
+steps:
+  - run:
+      name: Sign in to docker Hub
+      command: echo "$DOCKERHUB_PASSWORD" | docker login -u "$DOCKERHUB_USER_NAME" --password-stdin

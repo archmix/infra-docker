@@ -1,0 +1,23 @@
+parameters:
+  org_name:
+    type: string
+    default: triadyoss
+  image_name:
+    type: string
+  image_version:
+    type: string
+    default: latest
+  dockerfile:
+    type: string
+steps:
+  - run:
+      name: Build Docker image
+      command: |
+        docker build -t << parameters.org_name >>/<< parameters.image_name >>:<< parameters.image_version >> << parameters.dockerfile >>
+  - run:
+      name: Archive Docker image
+      command: docker save -o << parameters.org_name >>_<< parameters.image_name >>.tar << parameters.org_name >>/<< parameters.image_name >>
+  - persist_to_workspace:
+      root: .
+      paths:
+        - ./<< parameters.org_name >>_<< parameters.image_name >>.tar

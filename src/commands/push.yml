@@ -1,0 +1,25 @@
+parameters:
+  org_name:
+    type: string
+    default: triadyoss
+  image_name:
+    type: string
+  image_version:
+    type: string
+    default: latest
+  should_tag:
+    type: boolean
+    default: false
+steps:
+  - run:
+      name: Load archived Docker image
+      command: docker load -i /tmp/workspace/<< parameters.org_name >>_<< parameters.image_name >>.tar
+  - login
+  - when:
+      condition: <<parameters.should_tag>>
+      steps:
+        - run: docker tag << parameters.org_name >>/<< parameters.image_name >>:latest << parameters.org_name >>/<< parameters.image_name >>:<< parameters.image_version >>
+        - run: docker push << parameters.org_name >>/<< parameters.image_name >>:latest
+  - run:
+      name: Push Docker Image to Docker Hub
+      command: docker push << parameters.org_name >>/<< parameters.image_name >>:<< parameters.image_version >>

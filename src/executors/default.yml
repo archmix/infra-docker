@@ -1,0 +1,5 @@
+description: |
+  Default executor for build docker images on circle ci
+
+docker:
+  - image: circleci/buildpack-deps:stretch
