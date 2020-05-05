@@ -1,7 +1,6 @@
 parameters:
   org_name:
     type: string
-    default: triadyoss
   image_name:
     type: string
   image_version:
